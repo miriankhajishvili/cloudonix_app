@@ -1,0 +1,65 @@
+<div class="container" style="display: flex; justify-content: center">
+  <div class="col-md-8">
+    <div style="margin-top: 100px" class="card mb-3">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-3">
+            <span class="mb-0">Product Name</span>
+          </div>
+          <div class="col-sm-9 text-secondary">
+            <span>{{ currentProduct?.name }} </span>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-sm-3">
+            <span class="mb-0">SKU</span>
+          </div>
+          <div class="col-sm-9 text-secondary">
+            <span>{{ currentProduct?.sku }}</span>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-sm-3">
+            <span class="mb-0">Profile</span>
+          </div>
+          <div class="col-sm-9 text-secondary">
+            <span>{{ currentProduct?.profile?.type }}</span>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3">
+            <span class="mb-0">Description</span>
+          </div>
+          <div class="col-sm-9 text-secondary">
+            <span>{{ currentProduct?.description}}</span>
+          </div>
+        </div>
+        <hr />
+
+        <div>
+          <button
+            (click)="onEditClick()"
+            style="background-color: rgb(213, 195, 77)"
+            mat-flat-button
+            color="accent"
+          >
+            Edit Product
+          </button>
+
+          <button
+          (click)="openDialog('0ms', '0ms')"
+            type="button"
+            style="margin-left: 10px"
+            mat-flat-button
+            color="warn"
+          >
+            Delete Product
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
