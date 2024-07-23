@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { HeaderComponent } from '../../layout/header/header.component';
 import { IProduct } from '../../shared/interfaces/products.interface';
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { AddEditProductDialogComponent } from '../../shared/components/add-edit-product-dialog/add-edit-product-dialog.component';
 
 @Component({
   selector: 'app-products-list',
@@ -30,8 +32,18 @@ export class ProductsListComponent implements OnInit {
   products$: Observable<IProduct[]> = this.productsService.getAllProducts();
   items!: number;
 
-  constructor(private productsService: ProductsService) {}
+  constructor(
+    private productsService: ProductsService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {}
   handlePageEvent($event: PageTransitionEvent) {}
+
+
+  openDialog(): void {
+    this.dialog.open(AddEditProductDialogComponent, {
+      width: '350px',
+    });
+  }
 }

@@ -32,7 +32,7 @@ export class ProdactsDetailComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private productsService: ProductsService,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {}
   ngOnInit(): void {
     this.getCurrentProduct();
@@ -50,15 +50,9 @@ export class ProdactsDetailComponent implements OnInit {
 
   onEditClick() {}
 
-  openDialog(
-    enterAnimationDuration: string,
-    exitAnimationDuration: string
-  ): void {
+  openDialog(): void {
     this.dialog.open(DeleteConfirmDialogComponent, {
       width: '350px',
-      enterAnimationDuration,
-      exitAnimationDuration,
     });
-
-}
+  }
 }
