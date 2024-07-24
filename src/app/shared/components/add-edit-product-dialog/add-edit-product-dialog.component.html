@@ -57,11 +57,11 @@
         </div>
         
         <div class="button-container">
-          <button (click)="onSubmit()" mat-flat-button color="primary" type="button">
-            {{ onEdit ? 'Edit Product' : 'Create Product' }}
+          <button   [disabled]="!hasFormChanged()" (click)="onSubmit()" mat-flat-button color="primary" type="button">
+            {{ data.onEdit ? 'Edit Product' : 'Create Product' }}
           </button>
-             <button  (click)="onCancel()" mat-flat-button color="warn" type="button">
-            {{ onEdit ? 'Cancel Edit ' : 'Cancel Create' }}
+             <button  (click)="dialog.closeAll()" mat-flat-button color="warn" type="button">
+            {{ data.onEdit ? 'Cancel Edit ' : 'Cancel Create' }}
           </button>
         </div>
         

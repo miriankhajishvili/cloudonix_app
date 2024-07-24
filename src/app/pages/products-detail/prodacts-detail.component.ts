@@ -49,9 +49,10 @@ export class ProdactsDetailComponent implements OnInit {
     );
   }
 
-  onEditClick(currentProduct?: IProduct) {
+  onEditClick(currentProduct: IProduct) {
     this.dialog.open(AddEditProductDialogComponent, {
       data: {
+        onEdit: true,
         id: currentProduct?.id,
         name: currentProduct?.name,
         description: currentProduct?.description,
@@ -65,11 +66,13 @@ export class ProdactsDetailComponent implements OnInit {
         },
       },
     });
-    this.productsService.onEditClick$.next(true);
   }
 
-  openDialog(): void {
+  openDialog(currentProduct: IProduct): void {
     this.dialog.open(DeleteConfirmDialogComponent, {
+      data: {
+        id: currentProduct.id,
+      },
       width: '350px',
     });
   }

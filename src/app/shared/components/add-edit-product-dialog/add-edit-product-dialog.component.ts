@@ -16,7 +16,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { ProductsService } from '../../services/products.service';
 import { NgToastService } from 'ng-angular-popup';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -38,10 +37,9 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class AddEditProductDialogComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject();
-
   readonly data = inject<any>(MAT_DIALOG_DATA);
-  onEdit: boolean = false;
   isSKUReadOnly: boolean = true;
+  initialFormValues: any;
 
   productForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -58,53 +56,55 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
   constructor(
     private productsService: ProductsService,
     private ngToastService: NgToastService,
-    private dialog: MatDialog
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.productForm.patchValue(this.data);
-    this.onEditClick();
-    this.isSKUReadOnly = this.onEdit;
+    this.isSKUReadOnly = this.data.onEdit;
+    this.initialFormValues = this.productForm.getRawValue();
   }
 
-  onEditClick() {
-    this.productsService.onEditClick$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((res) => (this.onEdit = res));
-  }
-  onCancel() {
-    this.dialog.closeAll();
+  hasFormChanged(): boolean {
+    return (
+      JSON.stringify(this.initialFormValues) !==
+      JSON.stringify(this.productForm.getRawValue())
+    );
   }
 
   onSubmit(): void {
-    if (this.onEdit) {
-      this.productsService
-        .editProduct(this.data.id, this.productForm.value)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((res) => {
-          this.productsService.currentProductDetail$.next([]);
-          this.productsService.productsTableUbdate$.next([]);
-          this.ngToastService.success({
-            detail: 'Success Message',
-            summary: 'Product edited successfully',
+    if (this.productForm.valid) {
+      if (this.data.onEdit) {
+        this.productsService
+          .editProduct(this.data.id, this.productForm.value)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe((res) => {
+            this.productsService.currentProductDetail$.next(null);
+            this.productsService.productsTableUbdate$.next([]);
+            this.ngToastService.success({
+              detail: 'Success Message',
+              summary: 'Product edited successfully',
+            });
+            this.dialog.closeAll();
           });
-          this.dialog.closeAll();
-        });
-    } else {
-      this.productsService
-        .addProduct(this.productForm.value)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((res) => {
-          this.productsService.productsTableUbdate$.next([]);
-          this.ngToastService.success({
-            detail: 'Success Message',
-            summary: 'Product added successfully',
+      } else {
+        this.productsService
+          .addProduct(this.productForm.value)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe((res) => {
+            this.productsService.productsTableUbdate$.next([]);
+            this.ngToastService.success({
+              detail: 'Success Message',
+              summary: 'Product added successfully',
+            });
+            this.dialog.closeAll();
           });
-          this.dialog.closeAll();
-        });
+      }
     }
   }
+
   ngOnDestroy(): void {
-    this.unsubscribe$.next(null), this.unsubscribe$.complete();
+    this.unsubscribe$.next(null);
+    this.unsubscribe$.complete();
   }
 }

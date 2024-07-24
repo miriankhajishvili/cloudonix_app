@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
+  MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
@@ -30,9 +31,8 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrl: './delete-confirm-dialog.component.scss',
 })
 export class DeleteConfirmDialogComponent implements OnInit, OnDestroy {
-  unsubscribe$ = new Subject();
-
-  currentProductId!: number;
+  readonly data = inject<any>(MAT_DIALOG_DATA);
+  unsubscribe$ = new Subject<void>();
 
   constructor(
     public dialogRef: MatDialogRef<DeleteConfirmDialogComponent>,
@@ -41,20 +41,12 @@ export class DeleteConfirmDialogComponent implements OnInit, OnDestroy {
     private ngToastService: NgToastService
   ) {}
 
-  ngOnInit(): void {
-    this.getCurrentUsersId();
-  }
-
-  getCurrentUsersId() {
-    this.productsService.currentProductDetail$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((res) => (this.currentProductId = res.id));
-  }
+  ngOnInit(): void {}
 
   onYesClick() {
     this.productsService
-      .deleteProduct(this.currentProductId)
-      .pipe(takeUntil(this.unsubscribe$))
+      .deleteProduct(this.data.id)
+      // .pipe(takeUntil(this.unsubscribe$))
       .subscribe((res) => {
         this.ngToastService.success({
           detail: 'Success Message',
@@ -64,6 +56,6 @@ export class DeleteConfirmDialogComponent implements OnInit, OnDestroy {
       });
   }
   ngOnDestroy(): void {
-    this.unsubscribe$.next(null), this.unsubscribe$.complete();
+    this.unsubscribe$.next(), this.unsubscribe$.complete();
   }
 }

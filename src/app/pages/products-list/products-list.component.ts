@@ -55,6 +55,9 @@ export class ProductsListComponent implements OnInit {
 
   openDialog(): void {
     this.dialog.open(AddEditProductDialogComponent, {
+      data: {
+        onEdit: false,
+      },
       width: '550px',
     });
   }
