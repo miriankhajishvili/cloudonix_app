@@ -34,8 +34,6 @@ import { Router, RouterModule } from '@angular/router';
 export class LogInComponent implements OnInit {
   hide: boolean = true;
 
-
-
   get getKey() {
     return this.form.get('key');
   }

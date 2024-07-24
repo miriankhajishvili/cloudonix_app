@@ -28,8 +28,6 @@ import { LogOutDialogComponent } from '../../shared/components/log-out-dialog/lo
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-
-
   constructor(public dialog: MatDialog) {}
   openDialog(): void {
     this.dialog.open(LogOutDialogComponent, {

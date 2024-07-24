@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../shared/services/products.service';
 import { IProduct } from '../../shared/interfaces/products.interface';
-import { Console } from 'console';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,6 +11,7 @@ import { DeleteConfirmDialogComponent } from '../../shared/components/delete-con
 import { MatDialog } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AddEditProductDialogComponent } from '../../shared/components/add-edit-product-dialog/add-edit-product-dialog.component';
+import { Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-prodacts-detail',
@@ -30,7 +30,7 @@ import { AddEditProductDialogComponent } from '../../shared/components/add-edit-
 })
 export class ProdactsDetailComponent implements OnInit {
   currentProductId: number = this.activatedRoute.snapshot.params['id'];
-  currentProduct?: IProduct;
+  currentProduct$!: Observable<IProduct>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -42,12 +42,11 @@ export class ProdactsDetailComponent implements OnInit {
   }
 
   getCurrentProduct() {
-    this.productsService
-      .getCurrentProduct(this.currentProductId)
-      .subscribe((res) => {
-        this.currentProduct = res;
-      });
-    this.productsService.currentProductId$.next(this.currentProductId);
+    this.currentProduct$ = this.productsService.currentProductDetail$.pipe(
+      switchMap(() => {
+        return this.productsService.getCurrentProduct(this.currentProductId);
+      })
+    );
   }
 
   onEditClick(currentProduct?: IProduct) {

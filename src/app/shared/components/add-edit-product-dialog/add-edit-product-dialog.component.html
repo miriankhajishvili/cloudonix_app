@@ -1,7 +1,7 @@
 <div class="container">
   <div class="col-md-8">
     <mat-card>
-      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="productForm">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Product Name</mat-label>
           <input matInput formControlName="name" placeholder="Enter product name" />
@@ -57,10 +57,14 @@
         </div>
         
         <div class="button-container">
-          <button mat-flat-button color="primary" type="submit">
+          <button (click)="onSubmit()" mat-flat-button color="primary" type="button">
             {{ onEdit ? 'Edit Product' : 'Create Product' }}
           </button>
+             <button  (click)="onCancel()" mat-flat-button color="warn" type="button">
+            {{ onEdit ? 'Cancel Edit ' : 'Cancel Create' }}
+          </button>
         </div>
+        
         
       </form>
     </mat-card>

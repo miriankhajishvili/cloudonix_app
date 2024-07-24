@@ -8,7 +8,8 @@ import { IProduct } from '../interfaces/products.interface';
 })
 export class ProductsService extends BaseService {
   onEditClick$ = new BehaviorSubject<boolean>(false);
-  currentProductId$ = new BehaviorSubject<number>(0);
+  // currentProductId$ = new BehaviorSubject<number>(0);
+  currentProductDetail$ = new BehaviorSubject<any>({})
   productsTableUbdate$ = new BehaviorSubject<IProduct[]>([]);
 
   getAllProducts(): Observable<IProduct[]> {

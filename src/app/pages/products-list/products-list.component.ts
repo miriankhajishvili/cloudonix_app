@@ -27,8 +27,14 @@ import { AddEditProductDialogComponent } from '../../shared/components/add-edit-
   styleUrl: './products-list.component.scss',
 })
 export class ProductsListComponent implements OnInit {
-  displayedColumns: string[] = ['index', 'name', 'cost', 'description', 'detail'];
-  products$!: Observable<IProduct[]> 
+  displayedColumns: string[] = [
+    'index',
+    'name',
+    'cost',
+    'description',
+    'detail',
+  ];
+  products$!: Observable<IProduct[]>;
 
   constructor(
     private productsService: ProductsService,
@@ -49,7 +55,6 @@ export class ProductsListComponent implements OnInit {
 
   openDialog(): void {
     this.dialog.open(AddEditProductDialogComponent, {
-
       width: '550px',
     });
   }

@@ -1,10 +1,4 @@
-import {
-  Component,
-  DestroyRef,
-  OnDestroy,
-  OnInit,
-  inject,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialogActions,
@@ -14,11 +8,11 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProductsService } from '../../services/products.service';
 import { NgToastService } from 'ng-angular-popup';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-delete-confirm-dialog',
@@ -35,8 +29,8 @@ import { NgToastService } from 'ng-angular-popup';
   templateUrl: './delete-confirm-dialog.component.html',
   styleUrl: './delete-confirm-dialog.component.scss',
 })
-export class DeleteConfirmDialogComponent implements OnInit {
-  destroyRef: DestroyRef = inject(DestroyRef);
+export class DeleteConfirmDialogComponent implements OnInit, OnDestroy {
+  unsubscribe$ = new Subject();
 
   currentProductId!: number;
 
@@ -52,14 +46,15 @@ export class DeleteConfirmDialogComponent implements OnInit {
   }
 
   getCurrentUsersId() {
-    this.productsService.currentProductId$.subscribe(
-      (res) => (this.currentProductId = res)
-    );
+    this.productsService.currentProductDetail$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((res) => (this.currentProductId = res.id));
   }
 
   onYesClick() {
     this.productsService
       .deleteProduct(this.currentProductId)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((res) => {
         this.ngToastService.success({
           detail: 'Success Message',
@@ -67,5 +62,8 @@ export class DeleteConfirmDialogComponent implements OnInit {
         });
         this.router.navigate(['/products-list']);
       });
+  }
+  ngOnDestroy(): void {
+    this.unsubscribe$.next(null), this.unsubscribe$.complete();
   }
 }

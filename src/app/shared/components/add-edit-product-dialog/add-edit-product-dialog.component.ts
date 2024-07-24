@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -17,6 +17,7 @@ import { ProductsService } from '../../services/products.service';
 import { NgToastService } from 'ng-angular-popup';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-add-edit-product-dialog',
@@ -35,10 +36,12 @@ import { Router } from '@angular/router';
   templateUrl: './add-edit-product-dialog.component.html',
   styleUrls: ['./add-edit-product-dialog.component.scss'],
 })
-export class AddEditProductDialogComponent implements OnInit {
+export class AddEditProductDialogComponent implements OnInit, OnDestroy {
+  unsubscribe$ = new Subject();
+
   readonly data = inject<any>(MAT_DIALOG_DATA);
   onEdit: boolean = false;
-  isSKUReadOnly: boolean = true; // Condition to control the read-only state
+  isSKUReadOnly: boolean = true;
 
   productForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -55,35 +58,42 @@ export class AddEditProductDialogComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
     private ngToastService: NgToastService,
-    private dialog: MatDialog,
-    private router: Router
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.productForm.patchValue(this.data);
     this.onEditClick();
+    this.isSKUReadOnly = this.onEdit;
   }
 
   onEditClick() {
-    this.productsService.onEditClick$.subscribe((res) => (this.onEdit = res));
+    this.productsService.onEditClick$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((res) => (this.onEdit = res));
+  }
+  onCancel() {
+    this.dialog.closeAll();
   }
 
   onSubmit(): void {
     if (this.onEdit) {
       this.productsService
         .editProduct(this.data.id, this.productForm.value)
+        .pipe(takeUntil(this.unsubscribe$))
         .subscribe((res) => {
+          this.productsService.currentProductDetail$.next([]);
           this.productsService.productsTableUbdate$.next([]);
           this.ngToastService.success({
             detail: 'Success Message',
             summary: 'Product edited successfully',
           });
           this.dialog.closeAll();
-          this.router.navigate(['/products-list']);
         });
     } else {
       this.productsService
         .addProduct(this.productForm.value)
+        .pipe(takeUntil(this.unsubscribe$))
         .subscribe((res) => {
           this.productsService.productsTableUbdate$.next([]);
           this.ngToastService.success({
@@ -93,6 +103,8 @@ export class AddEditProductDialogComponent implements OnInit {
           this.dialog.closeAll();
         });
     }
-    console.log(this.productForm.value);
+  }
+  ngOnDestroy(): void {
+    this.unsubscribe$.next(null), this.unsubscribe$.complete();
   }
 }
