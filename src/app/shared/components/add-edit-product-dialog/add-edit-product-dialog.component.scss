@@ -1,24 +1,45 @@
 .container {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .col-md-8 {
-    width: 100%;
-    max-width: 800px;
-  }
-  
-  mat-card {
-    margin-top: 100px;
-    padding: 20px;
-  }
-  
-  .full-width {
-    width: 100%;
-    margin-bottom: 16px;
-  }
-  
-  button[mat-flat-button] {
-    margin-top: 16px;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; /* Full viewport height */
+}
+
+.mat-card {
+  width: 100%;
+  max-width: 600px; /* Maximum width for the card */
+  margin-top: 100px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mat-form-field {
+  margin-bottom: 20px; /* Spacing between form fields */
+}
+
+.mat-checkbox {
+  margin-bottom: 20px;
+}
+
+button {
+  margin-top: 20px;
+}
+
+div[formArrayName="customProperties"] {
+  margin-top: 20px;
+}
+
+div[formArrayName="customProperties"] > div {
+  display: flex;
+  align-items: center;
+}
+
+div[formArrayName="customProperties"] mat-form-field {
+  flex: 1;
+}
+
+div[formArrayName="customProperties"] mat-icon {
+  cursor: pointer;
+}

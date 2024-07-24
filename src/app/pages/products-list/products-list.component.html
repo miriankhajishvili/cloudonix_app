@@ -1,10 +1,10 @@
 <div style="margin-top: 25px" class="mat-elevation-z8">
-  <button  (click)="openDialog()" [routerLink]="['/products-detail',]" style="background-color: #36bd63;"  mat-raised-button color="primary">Add Producto</button>
+  <button  (click)="openDialog()"  style="background-color: #36bd63;"  mat-raised-button color="primary">Add Producto</button>
 
-  <table mat-table [dataSource]="(products$ | async) || [] ">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef><b>ID</b></th>
-      <td mat-cell *matCellDef="let product">{{ product.id }}</td>
+  <table mat-table [dataSource]="products$ || [] ">
+    <ng-container matColumnDef="index">
+      <th mat-header-cell *matHeaderCellDef><b>#</b></th>
+      <td mat-cell *matCellDef="let product; let i = index">{{ i + 1 }}</td>
     </ng-container>
 
     <ng-container matColumnDef="name">
@@ -16,7 +16,7 @@
 
     <ng-container matColumnDef="cost">
       <th mat-header-cell *matHeaderCellDef><b>Cost</b></th>
-      <td mat-cell *matCellDef="let product">{{ product.cost  }}</td>
+      <td mat-cell *matCellDef="let product">{{ product.cost | currency: 'USD'  }}</td>
     </ng-container>
 
     <ng-container matColumnDef="description">

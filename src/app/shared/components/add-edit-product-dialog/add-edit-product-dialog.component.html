@@ -4,11 +4,7 @@
       <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Product Name</mat-label>
-          <input
-            matInput
-            formControlName="name"
-            placeholder="Enter product name"
-          />
+          <input matInput formControlName="name" placeholder="Enter product name" />
           <mat-error *ngIf="productForm.get('name')?.hasError('required')">
             Product name is required
           </mat-error>
@@ -16,7 +12,7 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>SKU</mat-label>
-          <input matInput formControlName="sku" placeholder="Enter SKU" />
+          <input matInput formControlName="sku" placeholder="Enter SKU" [readonly]="isSKUReadOnly" />
           <mat-error *ngIf="productForm.get('sku')?.hasError('required')">
             SKU is required
           </mat-error>
@@ -24,12 +20,7 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Cost</mat-label>
-          <input
-            matInput
-            type="number"
-            formControlName="cost"
-            placeholder="Enter cost"
-          />
+          <input matInput type="number" formControlName="cost" placeholder="Enter cost" step="0.01" />
           <mat-error *ngIf="productForm.get('cost')?.hasError('required')">
             Cost is required
           </mat-error>
@@ -38,23 +29,36 @@
           </mat-error>
         </mat-form-field>
 
-        <form  [formGroup]="profileForm">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Profile</mat-label>
-            <input
-              matInput
-              formControlName="profile"
-              placeholder="Enter profile"
-            />
-            <mat-error *ngIf="productForm.get('profile')?.hasError('required')">
-              Profile is required
-            </mat-error>
-          </mat-form-field>
-        </form>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description" placeholder="Enter product description" rows="3"></textarea>
+          <mat-error *ngIf="productForm.get('description')?.hasError('required')">
+            Description is required
+          </mat-error>
+        </mat-form-field>
 
+        <div formGroupName="profile">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type">
+              <mat-option value="furniture">Furniture</mat-option>
+              <mat-option value="equipment">Equipment</mat-option>
+              <mat-option value="stationary">Stationary</mat-option>
+              <mat-option value="part">Part</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-checkbox formControlName="available">Available</mat-checkbox>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Backlog</mat-label>
+            <input matInput type="number" formControlName="backlog" placeholder="Enter backlog" />
+          </mat-form-field>
+        </div>
         <button mat-flat-button color="primary" type="submit">
-          Create Product
+          {{ onEdit ? 'Edit Product' : 'Create Product' }}
         </button>
+        
       </form>
     </mat-card>
   </div>

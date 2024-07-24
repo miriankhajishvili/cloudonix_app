@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ProductsService } from '../../shared/services/products.service';
 import { MatTableModule } from '@angular/material/table';
@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HeaderComponent } from '../../layout/header/header.component';
 import { IProduct } from '../../shared/interfaces/products.interface';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditProductDialogComponent } from '../../shared/components/add-edit-product-dialog/add-edit-product-dialog.component';
 
@@ -27,23 +27,29 @@ import { AddEditProductDialogComponent } from '../../shared/components/add-edit-
   styleUrl: './products-list.component.scss',
 })
 export class ProductsListComponent implements OnInit {
-  currentPage: number = 0;
-  displayedColumns: string[] = ['id', 'name', 'cost', 'description', 'detail'];
-  products$: Observable<IProduct[]> = this.productsService.getAllProducts();
-  items!: number;
+  displayedColumns: string[] = ['index', 'name', 'cost', 'description', 'detail'];
+  products$!: Observable<IProduct[]>
 
   constructor(
     private productsService: ProductsService,
     private dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {}
-  handlePageEvent($event: PageTransitionEvent) {}
+  ngOnInit(): void {
+    this.getAllProducts();
+  }
 
+  getAllProducts() {
+    this.products$ = this.productsService.productsTableUbdate$.pipe(
+      switchMap(() => {
+        return this.productsService.getAllProducts();
+      })
+    );
+  }
 
   openDialog(): void {
     this.dialog.open(AddEditProductDialogComponent, {
-      width: '350px',
+      width: '550px',
     });
   }
 }

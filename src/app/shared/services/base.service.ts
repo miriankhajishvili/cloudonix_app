@@ -11,7 +11,6 @@ export class BaseService {
 
   constructor(private http: HttpClient) {}
 
-
   get<T>(url: string): Observable<T> {
     return this.http.get<T>(this.apiUrl + url);
   }

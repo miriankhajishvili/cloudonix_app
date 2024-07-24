@@ -1,6 +1,4 @@
-export interface IProducts {
-  Products: IProduct[];
-}
+
 
 export interface IProduct {
   cost: number;
@@ -9,6 +7,8 @@ export interface IProduct {
   name: string;
   profile: {
     type: string;
+    available: boolean;
+    backlog: number
   };
   sku: string;
 }

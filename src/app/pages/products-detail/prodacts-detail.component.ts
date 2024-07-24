@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { DeleteConfirmDialogComponent } from '../../shared/components/delete-confirm-dialog/delete-confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { AddEditProductDialogComponent } from '../../shared/components/add-edit-product-dialog/add-edit-product-dialog.component';
 
 @Component({
   selector: 'app-prodacts-detail',
@@ -21,6 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
     MatButtonModule,
     FormsModule,
     MatCardModule,
+    MatCheckboxModule,
   ],
   templateUrl: './prodacts-detail.component.html',
   styleUrl: './prodacts-detail.component.scss',
@@ -43,12 +46,28 @@ export class ProdactsDetailComponent implements OnInit {
       .getCurrentProduct(this.currentProductId)
       .subscribe((res) => {
         this.currentProduct = res;
-        console.log(res);
       });
     this.productsService.currentProductId$.next(this.currentProductId);
   }
 
-  onEditClick() {}
+  onEditClick(currentProduct?: IProduct) {
+    this.dialog.open(AddEditProductDialogComponent, {
+      data: {
+        id: currentProduct?.id,
+        name: currentProduct?.name,
+        description: currentProduct?.description,
+        sku: currentProduct?.sku,
+        cost: currentProduct?.cost,
+
+        profile: {
+          type: currentProduct?.profile.type,
+          avalable: currentProduct?.profile.available,
+          backlog: currentProduct?.profile.backlog,
+        },
+      },
+    });
+    this.productsService.onEditClick$.next(true);
+  }
 
   openDialog(): void {
     this.dialog.open(DeleteConfirmDialogComponent, {
