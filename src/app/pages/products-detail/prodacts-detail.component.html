@@ -1,21 +1,21 @@
-<div class="container">
+<div *ngIf="currentProduct" class="container">
   <div class="card">
     <div class="card-body">
       <div class="row" *ngIf="currentProduct?.name">
         <div class="col-sm-3 label">Product Name</div>
-        <div class="col-sm-9 value">{{ currentProduct?.name }}</div>
+        <div class="col-sm-9 value">{{ currentProduct.name }}</div>
       </div>
       <hr *ngIf="currentProduct?.name" />
       
       <div class="row" *ngIf="currentProduct?.sku">
         <div class="col-sm-3 label">SKU</div>
-        <div class="col-sm-9 value">{{ currentProduct?.sku }}</div>
+        <div class="col-sm-9 value">{{ currentProduct.sku }}</div>
       </div>
       <hr *ngIf="currentProduct?.sku" />
       
       <div class="row" *ngIf="currentProduct?.cost">
         <div class="col-sm-3 label">Cost</div>
-        <div class="col-sm-9 value">{{ currentProduct?.cost }}</div>
+        <div class="col-sm-9 value">{{ currentProduct.cost }}</div>
       </div>
       <hr *ngIf="currentProduct?.cost" />
       
@@ -24,26 +24,26 @@
         <hr>
         <div class="row" *ngIf="currentProduct?.profile?.type">
           <div class="col-sm-3 label">Type</div>
-          <div class="col-sm-9 value">{{ currentProduct?.profile?.type }}</div>
+          <div class="col-sm-9 value">{{ currentProduct.profile.type }}</div>
         </div>
         <hr *ngIf="currentProduct?.profile?.type" />
         
         <div class="row" *ngIf="currentProduct?.profile?.available !== undefined">
           <div class="col-sm-3 label">Available</div>
-          <div class="col-sm-9 value">{{ currentProduct?.profile?.available }}</div>
+          <div class="col-sm-9 value">{{ currentProduct.profile.available }}</div>
         </div>
         <hr *ngIf="currentProduct?.profile?.available !== undefined" />
         
         <div class="row" *ngIf="currentProduct?.profile?.backlog !== undefined">
           <div class="col-sm-3 label">Backlog</div>
-          <div class="col-sm-9 value">{{ currentProduct?.profile?.backlog }}</div>
+          <div class="col-sm-9 value">{{ currentProduct.profile.backlog }}</div>
         </div>
         <hr *ngIf="currentProduct?.profile?.backlog !== undefined" />
       </div>
       
       <div class="row" *ngIf="currentProduct?.description">
         <div class="col-sm-3 label">Description</div>
-        <div class="col-sm-9 value">{{ currentProduct?.description }}</div>
+        <div class="col-sm-9 value">{{ currentProduct.description }}</div>
       </div>
       <hr *ngIf="currentProduct?.description" />
       

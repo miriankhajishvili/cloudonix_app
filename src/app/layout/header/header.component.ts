@@ -5,9 +5,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { LogOutDialogComponent } from '../../shared/components/log-out-dialog/log-out-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -26,4 +27,13 @@ import { MatDividerModule } from '@angular/material/divider';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+
+
+  constructor(public dialog: MatDialog) {}
+  openDialog(): void {
+    this.dialog.open(LogOutDialogComponent, {
+      width: '350px',
+    });
+  }
+}

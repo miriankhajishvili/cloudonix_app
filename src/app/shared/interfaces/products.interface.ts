@@ -1,5 +1,3 @@
-
-
 export interface IProduct {
   cost: number;
   description: string;
@@ -8,7 +6,7 @@ export interface IProduct {
   profile: {
     type: string;
     available: boolean;
-    backlog: number
+    backlog: number;
   };
   sku: string;
 }

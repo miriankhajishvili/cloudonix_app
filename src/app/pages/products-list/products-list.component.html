@@ -1,7 +1,7 @@
-<div style="margin-top: 25px" class="mat-elevation-z8">
-  <button  (click)="openDialog()"  style="background-color: #36bd63;"  mat-raised-button color="primary">Add Producto</button>
+<div *ngIf="products$" style="margin-top: 25px" class="mat-elevation-z8">
+  <button  (click)="openDialog()"   mat-raised-button>Add Product</button>
 
-  <table mat-table [dataSource]="products$ || [] ">
+  <table mat-table [dataSource]="products$  ">
     <ng-container matColumnDef="index">
       <th mat-header-cell *matHeaderCellDef><b>#</b></th>
       <td mat-cell *matCellDef="let product; let i = index">{{ i + 1 }}</td>

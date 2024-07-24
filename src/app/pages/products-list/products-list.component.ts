@@ -28,7 +28,7 @@ import { AddEditProductDialogComponent } from '../../shared/components/add-edit-
 })
 export class ProductsListComponent implements OnInit {
   displayedColumns: string[] = ['index', 'name', 'cost', 'description', 'detail'];
-  products$!: Observable<IProduct[]>
+  products$!: Observable<IProduct[]> 
 
   constructor(
     private productsService: ProductsService,
@@ -49,6 +49,7 @@ export class ProductsListComponent implements OnInit {
 
   openDialog(): void {
     this.dialog.open(AddEditProductDialogComponent, {
+
       width: '550px',
     });
   }

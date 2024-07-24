@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { IProduct} from '../interfaces/products.interface';
+import { IProduct } from '../interfaces/products.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,6 @@ export class ProductsService extends BaseService {
   editProduct(id: number, form: IProduct): Observable<IProduct> {
     return this.put<IProduct>(`items/${id}`, form);
   }
-
 
   deleteProduct(id: number): Observable<IProduct> {
     return this.delete<IProduct>(`items/${id}`);

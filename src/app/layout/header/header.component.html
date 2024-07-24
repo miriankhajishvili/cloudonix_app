@@ -12,8 +12,9 @@
 
       <span class="example-spacer"></span>
       <div class="header-right-side">
+      <span>Log out</span>
         <button
-          routerLink="/auth/login"
+          (click)="openDialog()"
           mat-icon-button
           class="example-icon"
           aria-label="Example icon-button with menu icon"

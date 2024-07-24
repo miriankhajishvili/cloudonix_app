@@ -1,6 +1,6 @@
 .header {
   width: 100%;
-  background-color: #9F1C6B;
+  background-color: #9f1c6b;
 
   display: flex;
   justify-content: space-between;
@@ -15,12 +15,14 @@
       height: 100%;
     }
   }
-  .logo {
-    cursor: pointer;
-  }
+
 
   .header-right-side {
     display: flex;
     align-items: center;
   }
+}
+
+span {
+  color: white;
 }

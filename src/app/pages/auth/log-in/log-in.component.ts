@@ -12,7 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-log-in',
@@ -26,39 +26,35 @@ import { RouterModule } from '@angular/router';
     MatTabsModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: './log-in.component.html',
   styleUrl: './log-in.component.scss',
 })
 export class LogInComponent implements OnInit {
-
   hide: boolean = true;
 
 
-  get getEmail() {
-    return this.form.get('email');
-  }
 
-  get getPassword() {
-    return this.form.get('password');
+  get getKey() {
+    return this.form.get('key');
   }
-
 
   form: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [
+    key: new FormControl('', [
       Validators.required,
       Validators.minLength(4),
       Validators.maxLength(15),
     ]),
   });
 
-  constructor(){}
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    
+  ngOnInit(): void {}
+
+  submit() {
+    if (this.form.valid) {
+      this.router.navigate(['/products-list']);
+    }
   }
-
-  submit(){}
 }
