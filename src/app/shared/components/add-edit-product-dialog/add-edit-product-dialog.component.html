@@ -10,28 +10,30 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>SKU</mat-label>
-          <input matInput formControlName="sku" placeholder="Enter SKU" [readonly]="isSKUReadOnly" />
-          <mat-error *ngIf="productForm.get('sku')?.hasError('required')">
-            SKU is required
-          </mat-error>
-        </mat-form-field>
+        <div class="sku-cost-container">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>SKU</mat-label>
+            <input matInput formControlName="sku" placeholder="Enter SKU" [readonly]="isSKUReadOnly" />
+            <mat-error *ngIf="productForm.get('sku')?.hasError('required')">
+              SKU is required
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Cost</mat-label>
-          <input matInput type="number" formControlName="cost" placeholder="Enter cost" step="0.01" />
-          <mat-error *ngIf="productForm.get('cost')?.hasError('required')">
-            Cost is required
-          </mat-error>
-          <mat-error *ngIf="productForm.get('cost')?.hasError('min')">
-            Cost must be a positive number
-          </mat-error>
-        </mat-form-field>
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Cost</mat-label>
+            <input matInput type="number" formControlName="cost" placeholder="Enter cost" step="0.01" />
+            <mat-error *ngIf="productForm.get('cost')?.hasError('required')">
+              Cost is required
+            </mat-error>
+            <mat-error *ngIf="productForm.get('cost')?.hasError('min')">
+              Cost must be a positive number
+            </mat-error>
+          </mat-form-field>
+        </div>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Description</mat-label>
-          <textarea matInput formControlName="description" placeholder="Enter product description" rows="3"></textarea>
+          <input matInput formControlName="description" placeholder="Enter product description" rows="3">
           <mat-error *ngIf="productForm.get('description')?.hasError('required')">
             Description is required
           </mat-error>
@@ -54,17 +56,24 @@
             <mat-label>Backlog</mat-label>
             <input matInput type="number" formControlName="backlog" placeholder="Enter backlog" />
           </mat-form-field>
+
+          
+        </div>
+        <div class="button-container">
+
+          <button  mat-flat-button color="primary" type="button">
+         Add Custom Property
+          </button>
         </div>
         
         <div class="button-container">
-          <button   [disabled]="!hasFormChanged()" (click)="onSubmit()" mat-flat-button color="primary" type="button">
+          <button [disabled]="!hasFormChanged()" (click)="onSubmit()" mat-flat-button color="primary" type="button">
             {{ data.onEdit ? 'Edit Product' : 'Create Product' }}
           </button>
-             <button  (click)="dialog.closeAll()" mat-flat-button color="warn" type="button">
+          <button (click)="dialog.closeAll()" mat-flat-button style="background-color: gray;" type="button">
             {{ data.onEdit ? 'Cancel Edit ' : 'Cancel Create' }}
           </button>
         </div>
-        
         
       </form>
     </mat-card>

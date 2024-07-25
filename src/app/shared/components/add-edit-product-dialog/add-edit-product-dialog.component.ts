@@ -80,7 +80,7 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe((res) => {
             this.productsService.currentProductDetail$.next(null);
-            this.productsService.productsTableUbdate$.next([]);
+            this.productsService.productsTableUpdate$.next([]);
             this.ngToastService.success({
               detail: 'Success Message',
               summary: 'Product edited successfully',
@@ -92,7 +92,7 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
           .addProduct(this.productForm.value)
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe((res) => {
-            this.productsService.productsTableUbdate$.next([]);
+            this.productsService.productsTableUpdate$.next([]);
             this.ngToastService.success({
               detail: 'Success Message',
               summary: 'Product added successfully',
@@ -102,6 +102,8 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(null);

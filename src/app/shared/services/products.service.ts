@@ -8,7 +8,7 @@ import { IProduct } from '../interfaces/products.interface';
 })
 export class ProductsService extends BaseService {
   currentProductDetail$ = new BehaviorSubject<null>(null);
-  productsTableUbdate$ = new BehaviorSubject<IProduct[]>([]);
+  productsTableUpdate$ = new BehaviorSubject<IProduct[]>([]);
 
   getAllProducts(): Observable<IProduct[]> {
     return this.get<IProduct[]>('items');

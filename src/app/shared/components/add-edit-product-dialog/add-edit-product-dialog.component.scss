@@ -44,3 +44,13 @@ mat-card {
     width: 100%;
   }
 }
+
+.sku-cost-container {
+  display: flex;
+  gap: 16px; /* Adjust spacing between fields as needed */
+}
+
+.half-width {
+  flex: 1;
+}
+

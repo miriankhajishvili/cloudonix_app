@@ -46,7 +46,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   getAllProducts() {
-    this.products$ = this.productsService.productsTableUbdate$.pipe(
+    this.products$ = this.productsService.productsTableUpdate$.pipe(
       switchMap(() => {
         return this.productsService.getAllProducts();
       })

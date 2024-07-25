@@ -7,6 +7,7 @@ export interface IProduct {
     type: string;
     available: boolean;
     backlog: number;
+    customProperties?: { key: string; value: string }[]; // Add this line
   };
   sku: string;
 }
