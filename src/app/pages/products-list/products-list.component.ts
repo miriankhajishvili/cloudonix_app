@@ -53,10 +53,21 @@ export class ProductsListComponent implements OnInit {
     );
   }
 
-  openDialog(): void {
+  openDialog(currentProduct: any): void {
     this.dialog.open(AddEditProductDialogComponent, {
       data: {
         onEdit: false,
+        id: currentProduct?.id,
+        name: currentProduct?.name,
+        description: currentProduct?.description,
+        sku: currentProduct?.sku,
+        cost: currentProduct?.cost,
+        profile: {
+          type: currentProduct?.profile?.type || 'furniture',
+          available: currentProduct?.profile?.available ?? true,
+          backlog: currentProduct?.profile?.backlog || null,
+          customProperties: currentProduct?.profile?.customProperties || [] // Ensure customProperties is defined
+        }
       },
       width: '550px',
     });

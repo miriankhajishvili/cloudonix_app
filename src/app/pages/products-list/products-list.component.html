@@ -1,5 +1,5 @@
-<div *ngIf="products$" style="margin-top: 25px" class="mat-elevation-z8">
-  <button  (click)="openDialog()"   mat-raised-button>Add Product</button>
+<div *ngIf="products$ as product" style="margin-top: 25px" class="mat-elevation-z8">
+  <button type="button"  (click)="openDialog(product)"   mat-raised-button>Add Product</button>
 
   <table mat-table [dataSource]="products$  ">
     <ng-container matColumnDef="index">

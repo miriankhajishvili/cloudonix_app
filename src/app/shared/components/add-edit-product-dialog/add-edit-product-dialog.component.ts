@@ -79,12 +79,12 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log('DATA',this.data)
+    console.log('DATA',this.customProperties)
     this.productForm.patchValue(this.data);
     this.isSKUReadOnly = this.data.onEdit;
     this.initialFormValues = this.productForm.getRawValue();
 
-    console.log(this.customProperties)
+   
 
     
   }
@@ -109,7 +109,7 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    if (this.productForm.valid) {
+    
       if (this.data.onEdit) {
         this.productsService
           .editProduct(this.data.id, this.productForm.value)
@@ -136,7 +136,7 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
             this.dialog.closeAll();
           });
       }
-    }
+    
   }
 
   

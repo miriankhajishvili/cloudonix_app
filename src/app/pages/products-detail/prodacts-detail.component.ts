@@ -61,17 +61,16 @@ export class ProdactsDetailComponent implements OnInit {
         description: currentProduct?.description,
         sku: currentProduct?.sku,
         cost: currentProduct?.cost,
-
         profile: {
-          type: currentProduct?.profile.type,
-          avalable: currentProduct?.profile.available,
-          backlog: currentProduct?.profile.backlog,
-          customProperties: currentProduct?.profile.customProperties || [] // Add customProperties here
-
-        },
-      },
+          type: currentProduct?.profile?.type || 'furniture',
+          available: currentProduct?.profile?.available ?? true,
+          backlog: currentProduct?.profile?.backlog || null,
+          customProperties: currentProduct?.profile?.customProperties || [] // Ensure customProperties is defined
+        }
+      }
     });
   }
+  
 
   openDialog(currentProduct: IProduct): void {
     this.dialog.open(DeleteConfirmDialogComponent, {
