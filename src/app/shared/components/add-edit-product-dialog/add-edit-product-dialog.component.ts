@@ -4,6 +4,8 @@ import {
   FormGroup,
   Validators,
   ReactiveFormsModule,
+  FormArray,
+  FormBuilder,
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -40,6 +42,7 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
   readonly data = inject<any>(MAT_DIALOG_DATA);
   isSKUReadOnly: boolean = true;
   initialFormValues: any;
+  
 
   productForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -50,20 +53,42 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
       type: new FormControl('furniture', Validators.required),
       available: new FormControl(true, Validators.required),
       backlog: new FormControl(null, Validators.required),
+      customProperties: new FormArray([])
+
+     
     }),
   });
+
+  get customProperties(): FormArray {
+    return this.productForm.get('profile.customProperties') as FormArray;
+  }
 
   constructor(
     private productsService: ProductsService,
     private ngToastService: NgToastService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.productForm.patchValue(this.data);
     this.isSKUReadOnly = this.data.onEdit;
     this.initialFormValues = this.productForm.getRawValue();
+
+    console.log(this.customProperties)
   }
+
+  addCustomProperty() {
+    const newProperty = this.fb.group({
+      key: [''],
+      value: ['']
+    });
+    this.customProperties.push(newProperty);
+  }
+  removeCustomProperty(index: number) {
+    this.customProperties.removeAt(index);
+  }
+
 
   hasFormChanged(): boolean {
     return (

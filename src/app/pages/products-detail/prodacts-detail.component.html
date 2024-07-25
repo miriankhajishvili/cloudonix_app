@@ -41,11 +41,11 @@
         </div>
         <hr *ngIf="currentProduct.profile.available !== undefined" />
 
-        <div class="row" *ngIf="currentProduct.profile.backlog !== undefined">
-          <div class="col-sm-3 label">Backlog</div>
-          <div class="col-sm-9 value">{{ currentProduct.profile.backlog }}</div>
+        <div class="row" *ngIf="currentProduct.profile.customProperties">
+          <div class="col-sm-3 label">{{currentProduct.profile.customProperties[0].key}}</div>
+          <div class="col-sm-9 value">{{currentProduct.profile.customProperties[0].value}}</div>
         </div>
-        <hr *ngIf="currentProduct.profile.backlog !== undefined" />
+        <hr *ngIf="currentProduct.profile.customProperties !== undefined" />
       </div>
 
       <div class="button-group">

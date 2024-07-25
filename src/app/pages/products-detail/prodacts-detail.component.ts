@@ -39,6 +39,7 @@ export class ProdactsDetailComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.getCurrentProduct();
+    this.currentProduct$.subscribe(res => console.log('Current', res))
   }
 
   getCurrentProduct() {
@@ -48,6 +49,8 @@ export class ProdactsDetailComponent implements OnInit {
       })
     );
   }
+
+  
 
   onEditClick(currentProduct: IProduct) {
     this.dialog.open(AddEditProductDialogComponent, {

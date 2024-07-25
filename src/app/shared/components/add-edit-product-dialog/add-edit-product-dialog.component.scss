@@ -54,3 +54,17 @@ mat-card {
   flex: 1;
 }
 
+.custom-property {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.custom-property .mat-form-field {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.button-container {
+  margin-top: 20px;
+}

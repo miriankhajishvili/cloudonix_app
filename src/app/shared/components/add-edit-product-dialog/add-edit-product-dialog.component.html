@@ -4,7 +4,11 @@
       <form [formGroup]="productForm">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Product Name</mat-label>
-          <input matInput formControlName="name" placeholder="Enter product name" />
+          <input
+            matInput
+            formControlName="name"
+            placeholder="Enter product name"
+          />
           <mat-error *ngIf="productForm.get('name')?.hasError('required')">
             Product name is required
           </mat-error>
@@ -13,7 +17,12 @@
         <div class="sku-cost-container">
           <mat-form-field appearance="outline" class="half-width">
             <mat-label>SKU</mat-label>
-            <input matInput formControlName="sku" placeholder="Enter SKU" [readonly]="isSKUReadOnly" />
+            <input
+              matInput
+              formControlName="sku"
+              placeholder="Enter SKU"
+              [readonly]="isSKUReadOnly"
+            />
             <mat-error *ngIf="productForm.get('sku')?.hasError('required')">
               SKU is required
             </mat-error>
@@ -21,7 +30,13 @@
 
           <mat-form-field appearance="outline" class="half-width">
             <mat-label>Cost</mat-label>
-            <input matInput type="number" formControlName="cost" placeholder="Enter cost" step="0.01" />
+            <input
+              matInput
+              type="number"
+              formControlName="cost"
+              placeholder="Enter cost"
+              step="0.01"
+            />
             <mat-error *ngIf="productForm.get('cost')?.hasError('required')">
               Cost is required
             </mat-error>
@@ -33,8 +48,15 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Description</mat-label>
-          <input matInput formControlName="description" placeholder="Enter product description" rows="3">
-          <mat-error *ngIf="productForm.get('description')?.hasError('required')">
+          <input
+            matInput
+            formControlName="description"
+            placeholder="Enter product description"
+            rows="3"
+          />
+          <mat-error
+            *ngIf="productForm.get('description')?.hasError('required')"
+          >
             Description is required
           </mat-error>
         </mat-form-field>
@@ -54,27 +76,58 @@
 
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Backlog</mat-label>
-            <input matInput type="number" formControlName="backlog" placeholder="Enter backlog" />
+            <input
+              matInput
+              type="number"
+              formControlName="backlog"
+              placeholder="Enter backlog"
+            />
           </mat-form-field>
-
-          
-        </div>
-        <div class="button-container">
-
-          <button  mat-flat-button color="primary" type="button">
-         Add Custom Property
-          </button>
-        </div>
+          <div formArrayName="customProperties">
+            <div *ngFor="let property of customProperties.controls; let i = index" [formGroupName]="i" class="custom-property">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Key</mat-label>
+                <input matInput formControlName="key" placeholder="Enter key" />
+              </mat-form-field>
         
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Value</mat-label>
+                <input matInput formControlName="value" placeholder="Enter value" />
+              </mat-form-field>
+        
+              <button mat-icon-button color="warn" (click)="removeCustomProperty(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        
+          <!-- Add Custom Property Button -->
+          <div class="button-container">
+            <button mat-flat-button color="primary" (click)="addCustomProperty()" type="button">
+              Add Custom Property
+            </button>
+          </div>
+        </div>
+
         <div class="button-container">
-          <button [disabled]="!hasFormChanged()" (click)="onSubmit()" mat-flat-button color="primary" type="button">
-            {{ data.onEdit ? 'Edit Product' : 'Create Product' }}
+          <button
+            [disabled]="!hasFormChanged()"
+            (click)="onSubmit()"
+            mat-flat-button
+            color="primary"
+            type="button"
+          >
+            {{ data.onEdit ? "Edit Product" : "Create Product" }}
           </button>
-          <button (click)="dialog.closeAll()" mat-flat-button style="background-color: gray;" type="button">
-            {{ data.onEdit ? 'Cancel Edit ' : 'Cancel Create' }}
+          <button
+            (click)="dialog.closeAll()"
+            mat-flat-button
+            style="background-color: gray"
+            type="button"
+          >
+            {{ data.onEdit ? "Cancel Edit " : "Cancel Create" }}
           </button>
         </div>
-        
       </form>
     </mat-card>
   </div>
