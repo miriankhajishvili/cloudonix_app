@@ -39,7 +39,13 @@
             {{ currentProduct.profile.available }}
           </div>
         </div>
-        <hr *ngIf="currentProduct.profile.available !== undefined" />
+        <div class="row" *ngIf="currentProduct.profile.backlog !== undefined">
+          <div class="col-sm-3 label">Backlog</div>
+          <div class="col-sm-9 value">
+            {{ currentProduct.profile.backlog }}
+          </div>
+        </div>
+        <hr *ngIf="currentProduct.profile.backlog !== undefined" />
 
         <div >
           <div *ngFor="let property of currentProduct.profile.customProperties" class="row">

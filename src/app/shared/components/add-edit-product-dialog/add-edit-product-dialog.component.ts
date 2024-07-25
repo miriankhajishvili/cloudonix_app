@@ -19,6 +19,8 @@ import { ProductsService } from '../../services/products.service';
 import { NgToastService } from 'ng-angular-popup';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
+import { positiveIntegerValidator } from '../../regex/positiveIntegerValidator.regex';
+import { IProduct } from '../../interfaces/products.interface';
 
 @Component({
   selector: 'app-add-edit-product-dialog',
@@ -38,11 +40,10 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./add-edit-product-dialog.component.scss'],
 })
 export class AddEditProductDialogComponent implements OnInit, OnDestroy {
-  unsubscribe$ = new Subject();
   readonly data = inject<any>(MAT_DIALOG_DATA);
+  unsubscribe$ = new Subject();
   isSKUReadOnly: boolean = true;
-  initialFormValues: any;
-  
+  initialFormValues?: IProduct;
 
   productForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -52,25 +53,31 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
     profile: new FormGroup({
       type: new FormControl('furniture', Validators.required),
       available: new FormControl(true, Validators.required),
-      backlog: new FormControl(null, Validators.required),
-      customProperties: new FormArray(this.initializeCustomProperties(this.data.profile.customProperties || []))
+      backlog: new FormControl(null, [
+        Validators.required,
+        positiveIntegerValidator(),
+      ]),
+      customProperties: new FormArray(
+        this.initializeCustomProperties(
+          this.data.profile.customProperties || []
+        )
+      ),
     }),
   });
-  
 
   get customProperties(): FormArray {
     return this.productForm.get('profile.customProperties') as FormArray;
   }
 
   initializeCustomProperties(customProperties: any[]): FormGroup[] {
-    return customProperties.map(prop => {
+    return customProperties.map((prop) => {
       return new FormGroup({
         key: new FormControl(prop.key, Validators.required),
         value: new FormControl(prop.value, Validators.required),
       });
     });
   }
-  
+
   constructor(
     private productsService: ProductsService,
     private ngToastService: NgToastService,
@@ -79,27 +86,21 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-
     this.productForm.patchValue(this.data);
     this.isSKUReadOnly = this.data.onEdit;
     this.initialFormValues = this.productForm.getRawValue();
-
-   
-
-    
   }
 
   addCustomProperty() {
     const newProperty = this.fb.group({
       key: [''],
-      value: ['']
+      value: [''],
     });
     this.customProperties.push(newProperty);
   }
   removeCustomProperty(index: number) {
     this.customProperties.removeAt(index);
   }
-
 
   hasFormChanged(): boolean {
     return (
@@ -109,7 +110,7 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    
+    if (this.productForm.valid) {
       if (this.data.onEdit) {
         this.productsService
           .editProduct(this.data.id, this.productForm.value)
@@ -136,10 +137,9 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
             this.dialog.closeAll();
           });
       }
-    
+    }
+    this.productForm.markAllAsTouched();
   }
-
-  
 
   ngOnDestroy(): void {
     this.unsubscribe$.next(null);

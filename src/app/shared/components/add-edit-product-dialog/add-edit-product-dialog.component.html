@@ -82,6 +82,12 @@
               formControlName="backlog"
               placeholder="Enter backlog"
             />
+            <mat-error *ngIf="productForm.get('profile.backlog')?.hasError('required')">
+              Backlog is required.
+            </mat-error>
+            <mat-error *ngIf="productForm.get('profile.backlog')?.hasError('positiveInteger')">
+              Backlog must be a positive integer.
+            </mat-error>
           </mat-form-field>
 
           <div formArrayName="customProperties">
@@ -110,7 +116,7 @@
               </mat-form-field>
 
               <button
-                *ngIf="!data.onEdit"
+          
                 type="button"
                 mat-icon-button
                 color="warn"
@@ -121,7 +127,7 @@
             </div>
           </div>
 
-          <div class="button-container">
+          <div *ngIf="!data.onEdit" class="button-container">
             <button
               mat-flat-button
               color="primary"

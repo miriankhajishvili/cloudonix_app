@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 
 import { ProductsService } from '../../services/products.service';
 import { NgToastService } from 'ng-angular-popup';
-import { Subject, takeUntil } from 'rxjs';
+
 
 @Component({
   selector: 'app-delete-confirm-dialog',
@@ -30,12 +30,10 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './delete-confirm-dialog.component.html',
   styleUrl: './delete-confirm-dialog.component.scss',
 })
-export class DeleteConfirmDialogComponent implements OnInit, OnDestroy {
+export class DeleteConfirmDialogComponent implements OnInit {
   readonly data = inject<any>(MAT_DIALOG_DATA);
-  unsubscribe$ = new Subject<void>();
 
   constructor(
-    public dialogRef: MatDialogRef<DeleteConfirmDialogComponent>,
     private productsService: ProductsService,
     private router: Router,
     private ngToastService: NgToastService
@@ -44,18 +42,12 @@ export class DeleteConfirmDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   onYesClick() {
-    this.productsService
-      .deleteProduct(this.data.id)
-      // .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((res) => {
-        this.ngToastService.success({
-          detail: 'Success Message',
-          summary: 'Product deleted successfully',
-        });
-        this.router.navigate(['/products-list']);
+    this.productsService.deleteProduct(this.data.id).subscribe((res) => {
+      this.ngToastService.success({
+        detail: 'Success Message',
+        summary: 'Product deleted successfully',
       });
-  }
-  ngOnDestroy(): void {
-    this.unsubscribe$.next(), this.unsubscribe$.complete();
+      this.router.navigate(['/products-list']);
+    });
   }
 }
