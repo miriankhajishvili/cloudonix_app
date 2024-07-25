@@ -79,7 +79,7 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log('DATA',this.customProperties)
+
     this.productForm.patchValue(this.data);
     this.isSKUReadOnly = this.data.onEdit;
     this.initialFormValues = this.productForm.getRawValue();

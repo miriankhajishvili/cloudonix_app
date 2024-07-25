@@ -83,27 +83,52 @@
               placeholder="Enter backlog"
             />
           </mat-form-field>
+
           <div formArrayName="customProperties">
-            <div *ngFor="let property of customProperties.controls; let i = index" [formGroupName]="i" class="custom-property">
+            <div
+              *ngFor="let property of customProperties.controls; let i = index"
+              [formGroupName]="i"
+              class="custom-property"
+            >
               <mat-form-field appearance="outline" class="half-width">
                 <mat-label>Key</mat-label>
-                <input matInput formControlName="key" placeholder="Enter key" />
+                <input
+                  matInput
+                  formControlName="key"
+                  placeholder="Enter key"
+                  [readonly]="data.onEdit"
+                />
               </mat-form-field>
-        
+
               <mat-form-field appearance="outline" class="half-width">
                 <mat-label>Value</mat-label>
-                <input matInput formControlName="value" placeholder="Enter value" />
+                <input
+                  matInput
+                  formControlName="value"
+                  placeholder="Enter value"
+                />
               </mat-form-field>
-        
-              <button type="button" mat-icon-button color="warn" (click)="removeCustomProperty(i)">
+
+              <button
+                *ngIf="!data.onEdit"
+                type="button"
+                mat-icon-button
+                color="warn"
+                (click)="removeCustomProperty(i)"
+              >
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
           </div>
-        
-          <!-- Add Custom Property Button -->
-          <div class="button-container">
-            <button mat-flat-button color="primary" (click)="addCustomProperty()" type="button">
+
+          <div *ngIf="!data.onEdit" class="button-container">
+            <button
+              mat-flat-button
+              color="primary"
+              (click)="addCustomProperty()"
+              type="button"
+              [disabled]="data.onEdit"
+            >
               Add Custom Property
             </button>
           </div>
@@ -117,7 +142,7 @@
             color="primary"
             type="button"
           >
-            {{ data.onEdit ? "Edit Product" : "Create Product" }}
+            {{ data.onEdit ? 'Edit Product' : 'Create Product' }}
           </button>
           <button
             (click)="dialog.closeAll()"
@@ -125,7 +150,7 @@
             style="background-color: gray"
             type="button"
           >
-            {{ data.onEdit ? "Cancel Edit " : "Cancel Create" }}
+            {{ data.onEdit ? 'Cancel Edit' : 'Cancel Create' }}
           </button>
         </div>
       </form>

@@ -39,7 +39,7 @@ export class ProdactsDetailComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.getCurrentProduct();
-    this.currentProduct$.subscribe(res => console.log('Current', res))
+  
   }
 
   getCurrentProduct() {
