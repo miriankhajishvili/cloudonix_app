@@ -41,12 +41,14 @@
         </div>
         <hr *ngIf="currentProduct.profile.available !== undefined" />
 
-        <div class="row" *ngIf="currentProduct.profile.customProperties">
-          <div class="col-sm-3 label">{{currentProduct.profile.customProperties[0].key}}</div>
-          <div class="col-sm-9 value">{{currentProduct.profile.customProperties[0].value}}</div>
+        <div >
+          <div *ngFor="let property of currentProduct.profile.customProperties" class="row">
+            <div class="col-sm-3 label">{{property.key}}</div>
+            <br>
+            <div class="col-sm-9 value">{{property.value}}</div>
+          </div>
+          <hr />
         </div>
-        <hr *ngIf="currentProduct.profile.customProperties !== undefined" />
-      </div>
 
       <div class="button-group">
         <button

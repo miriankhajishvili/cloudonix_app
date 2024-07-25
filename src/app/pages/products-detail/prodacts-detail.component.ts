@@ -66,6 +66,8 @@ export class ProdactsDetailComponent implements OnInit {
           type: currentProduct?.profile.type,
           avalable: currentProduct?.profile.available,
           backlog: currentProduct?.profile.backlog,
+          customProperties: currentProduct?.profile.customProperties || [] // Add customProperties here
+
         },
       },
     });

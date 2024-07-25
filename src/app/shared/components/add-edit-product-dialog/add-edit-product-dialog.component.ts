@@ -53,16 +53,24 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
       type: new FormControl('furniture', Validators.required),
       available: new FormControl(true, Validators.required),
       backlog: new FormControl(null, Validators.required),
-      customProperties: new FormArray([])
-
-     
+      customProperties: new FormArray(this.initializeCustomProperties(this.data.profile.customProperties || []))
     }),
   });
+  
 
   get customProperties(): FormArray {
     return this.productForm.get('profile.customProperties') as FormArray;
   }
 
+  initializeCustomProperties(customProperties: any[]): FormGroup[] {
+    return customProperties.map(prop => {
+      return new FormGroup({
+        key: new FormControl(prop.key, Validators.required),
+        value: new FormControl(prop.value, Validators.required),
+      });
+    });
+  }
+  
   constructor(
     private productsService: ProductsService,
     private ngToastService: NgToastService,
@@ -71,11 +79,14 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    console.log('DATA',this.data)
     this.productForm.patchValue(this.data);
     this.isSKUReadOnly = this.data.onEdit;
     this.initialFormValues = this.productForm.getRawValue();
 
     console.log(this.customProperties)
+
+    
   }
 
   addCustomProperty() {
