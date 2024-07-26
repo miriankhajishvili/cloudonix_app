@@ -93,8 +93,8 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
 
   addCustomProperty() {
     const newProperty = this.fb.group({
-      key: [''],
-      value: [''],
+      key: ['', Validators.required],
+      value: ['',Validators.required],
     });
     this.customProperties.push(newProperty);
   }

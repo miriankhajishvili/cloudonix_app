@@ -103,7 +103,11 @@
                   formControlName="key"
                   placeholder="Enter key"
                   [readonly]="data.onEdit"
+                  
                 />
+                <mat-error *ngIf="property.get('key')?.hasError('required')">
+                  Key is required
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field appearance="outline" class="half-width">
@@ -113,6 +117,9 @@
                   formControlName="value"
                   placeholder="Enter value"
                 />
+                <mat-error *ngIf="property.get('value')?.hasError('required')">
+                  Value is required
+                </mat-error>
               </mat-form-field>
 
               <button
