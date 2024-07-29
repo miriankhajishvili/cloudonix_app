@@ -15,18 +15,18 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'browser/products-list',
+        redirectTo: 'products-list',
         pathMatch: 'full',
       },
       {
-        path: 'browser/products-list',
+        path: 'products-list',
         loadComponent: () =>
           import('./pages/products-list/products-list.component').then(
             (m) => m.ProductsListComponent
           ),
       },
       {
-        path: 'browser/products-detail/:id',
+        path: 'products-detail/:id',
         loadComponent: () =>
           import('./pages/products-detail/prodacts-detail.component').then(
             (m) => m.ProdactsDetailComponent

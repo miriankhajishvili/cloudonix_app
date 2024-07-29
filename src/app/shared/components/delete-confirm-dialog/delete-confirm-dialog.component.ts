@@ -47,7 +47,7 @@ export class DeleteConfirmDialogComponent implements OnInit {
         detail: 'Success Message',
         summary: 'Product deleted successfully',
       });
-      this.router.navigate(['/browser/products-list']);
+      this.router.navigate(['/products-list']);
     });
   }
 }

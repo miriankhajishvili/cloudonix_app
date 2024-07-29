@@ -52,7 +52,7 @@ export class LogInComponent implements OnInit {
 
   submit() {
     if (this.form.valid) {
-      this.router.navigate(['/browser/products-list']);
+      this.router.navigate(['/products-list']);
     }
   }
 }
