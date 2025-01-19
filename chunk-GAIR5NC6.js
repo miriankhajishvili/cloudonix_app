@@ -1,1 +1,0 @@
-import"./chunk-4CLCTAJ7.js";var o=[{path:"",redirectTo:"auth/login",pathMatch:"full"},{path:"auth",children:[{path:"login",loadComponent:()=>import("./chunk-QQUPC67N.js").then(t=>t.LogInComponent)}]}];export{o as routes};
