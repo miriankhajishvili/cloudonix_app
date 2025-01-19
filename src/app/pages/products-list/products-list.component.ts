@@ -25,11 +25,11 @@ export class ProductsListComponent implements OnInit {
   public productService = inject(ProductService);
 
   displayedColumns: string[] = [
-    ProductTableColumns.Index,
-    ProductTableColumns.Name,
-    ProductTableColumns.Cost,
-    ProductTableColumns.Description,
-    ProductTableColumns.Detail,
+    ProductTableColumns.INDEX,
+    ProductTableColumns.NAME,
+    ProductTableColumns.COST,
+    ProductTableColumns.DESCRIPTION,
+    ProductTableColumns.DETAIL,
   ];
 
   ngOnInit(): void {

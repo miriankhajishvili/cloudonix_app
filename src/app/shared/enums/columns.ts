@@ -1,8 +1,8 @@
 export enum ProductTableColumns {
-    Index = 'index',
-    Name = 'name',
-    Cost = 'cost',
-    Description = 'description',
-    Detail = 'detail',
+    INDEX = 'index',
+    NAME = 'name',
+    COST = 'cost',
+    DESCRIPTION = 'description',
+    DETAIL = 'detail',
   }
   

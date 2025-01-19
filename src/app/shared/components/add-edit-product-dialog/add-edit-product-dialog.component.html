@@ -2,7 +2,7 @@
   <div class="col-md-8">
     <mat-card>
       <form [formGroup]="productForm">
-        <!-- Product Name Field with Icon -->
+
         <mat-form-field appearance="outline" class="full-width">
           <mat-icon matPrefix>drive_file_rename_outline</mat-icon>
           <mat-label>Product Name</mat-label>
@@ -16,7 +16,7 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- SKU and Cost Fields with Icons -->
+     
         <div class="sku-cost-container">
           <mat-form-field appearance="outline" class="half-width">
             <mat-icon matPrefix>tag</mat-icon>
@@ -51,7 +51,7 @@
           </mat-form-field>
         </div>
 
-        <!-- Description Field with Icon -->
+    
         <mat-form-field appearance="outline" class="full-width">
           <mat-icon matPrefix>description</mat-icon>
           <mat-label>Description</mat-label>
@@ -170,7 +170,7 @@
           </div>
         </div>
 
-        <!-- Submit and Cancel Buttons -->
+      
         <div class="button-container">
           <button
             [disabled]="!hasFormChanged()"

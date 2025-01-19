@@ -5,6 +5,8 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   color: #ececec;
   border: 1px solid #444444;
+  margin: 10px;
+  overflow-x: auto;
 }
 
 table {
@@ -79,4 +81,46 @@ table {
 
 ::ng-deep .mat-mdc-paginator-page-size {
   display: none;
+}
+
+@media (max-width: 768px) {
+  .product-table-container {
+    padding: 10px;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  .header-cell {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .data-cell {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .detail-button {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-cell,
+  .data-cell {
+    font-size: 11px;
+    padding: 8px;
+  }
+
+  .detail-button {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+
+  table {
+    font-size: 11px;
+  }
 }
