@@ -30,13 +30,13 @@ export class HeaderComponent {
     });
   }
 
-  onClick(){
-      this.dialog.open(AddEditProductDialogComponent, {
-          data: {
-            onEdit: false,
-            profile: {},
-          },
-          width: '550px',
-        });
+  onClick() {
+    this.dialog.open(AddEditProductDialogComponent, {
+      data: {
+        onEdit: false,
+        profile: {},
+      },
+      width: '550px',
+    });
   }
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDialogActions,
   MatDialogClose,
@@ -13,6 +13,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { ProductService } from '../../services/product.service';
+import { MessageType, ToastMessages } from '../../enums/massages';
 @Component({
   selector: 'app-log-out-dialog',
   standalone: true,
@@ -28,22 +29,16 @@ import { ProductService } from '../../services/product.service';
   templateUrl: './log-out-dialog.component.html',
   styleUrl: './log-out-dialog.component.scss',
 })
-export class LogOutDialogComponent implements OnInit {
-    public productService = inject(ProductService);
-  
-  constructor(
-    public dialogRef: MatDialogRef<LogOutDialogComponent>,
-    private router: Router,
-    private ngToastService: NgToastService
-    
-  ) {}
-
-  ngOnInit(): void {}
+export class LogOutDialogComponent {
+  public productService = inject(ProductService);
+  public dialogRef = inject(MatDialogRef<LogOutDialogComponent>);
+  private ngToastService = inject(NgToastService);
+  private router = inject(Router);
 
   onYesClick() {
     this.ngToastService.success({
-      detail: 'Success Message',
-      summary: 'User logged out successfully',
+      detail: MessageType.SUCCESS,
+      summary: ToastMessages.LOGIN_SUCCESS,
     });
     this.productService.key.set(null);
     this.router.navigate(['/auth/login']);

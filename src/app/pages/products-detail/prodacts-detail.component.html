@@ -1,17 +1,18 @@
 <div *ngIf="productService.currentProductSignal() as currentProduct" class="container mat-elevation-z4">
   <mat-card>
-    <mat-card-content>
+    <mat-card-content class="card">
       <div *ngIf="currentProduct.name">
         <div class="row">
+          <mat-icon aria-hidden="true">storefront</mat-icon> <!-- Product Name Icon -->
           <span class="label">Product Name:</span>
           <span class="value">{{ currentProduct.name }}</span>
         </div>
         <mat-divider></mat-divider>
       </div>
-       
 
       <div *ngIf="currentProduct.sku">
         <div class="row">
+          <mat-icon aria-hidden="true">tag</mat-icon> <!-- SKU Icon -->
           <span class="label">SKU:</span>
           <span class="value">{{ currentProduct.sku }}</span>
         </div>
@@ -20,6 +21,7 @@
 
       <div *ngIf="currentProduct.cost">
         <div class="row">
+          <mat-icon aria-hidden="true">attach_money</mat-icon> <!-- Cost Icon -->
           <span class="label">Cost:</span>
           <span class="value">{{ currentProduct.cost | currency }}</span>
         </div>
@@ -28,6 +30,7 @@
 
       <div *ngIf="currentProduct.description">
         <div class="row">
+          <mat-icon aria-hidden="true">description</mat-icon> <!-- Description Icon -->
           <span class="label">Description:</span>
           <span class="value">{{ currentProduct.description }}</span>
         </div>
@@ -36,11 +39,12 @@
 
       <div class="profile-section" *ngIf="currentProduct.profile">
         <h4>
-          <mat-icon aria-hidden="true" matTooltip="Profile">person</mat-icon>
+          <mat-icon aria-hidden="true" matTooltip="Profile">person</mat-icon> <!-- Profile Icon -->
         </h4>
         <mat-divider></mat-divider>
         <div *ngIf="currentProduct.profile.type">
           <div class="row">
+            <mat-icon aria-hidden="true">category</mat-icon> <!-- Type Icon -->
             <span class="label">Type:</span>
             <span class="value">{{ currentProduct.profile.type | titlecase }}</span>
           </div>
@@ -49,6 +53,7 @@
 
         <div *ngIf="currentProduct.profile.available !== undefined">
           <div class="row">
+            <mat-icon aria-hidden="true">check_circle</mat-icon> <!-- Available Icon -->
             <span class="label">Available:</span>
             <span class="value">{{ currentProduct.profile.available }}</span>
           </div>
@@ -57,6 +62,7 @@
 
         <div *ngIf="currentProduct.profile.backlog !== undefined">
           <div class="row">
+            <mat-icon aria-hidden="true">update</mat-icon> <!-- Backlog Icon -->
             <span class="label">Backlog:</span>
             <span class="value">{{ currentProduct.profile.backlog }}</span>
           </div>
@@ -65,6 +71,7 @@
 
         <div *ngFor="let property of currentProduct.profile.customProperties">
           <div class="row">
+            <mat-icon aria-hidden="true">build</mat-icon> <!-- Custom Property Icon -->
             <span class="label">{{ property.key }}:</span>
             <span class="value">{{ property.value }}</span>
           </div>
@@ -73,8 +80,14 @@
       </div>
 
       <div class="button-group">
-        <button mat-raised-button color="primary" (click)="onEditClick(currentProduct)">Edit Product</button>
-        <button mat-raised-button color="warn" (click)="openDialog(currentProduct)">Delete Product</button>
+        <button mat-raised-button color="primary" (click)="onEditClick(currentProduct)">
+          <mat-icon aria-hidden="true">edit</mat-icon> <!-- Edit Icon -->
+          Edit Product
+        </button>
+        <button mat-raised-button color="warn" (click)="openDialog(currentProduct)">
+          <mat-icon aria-hidden="true">delete</mat-icon> <!-- Delete Icon -->
+          Delete Product
+        </button>
       </div>
     </mat-card-content>
   </mat-card>

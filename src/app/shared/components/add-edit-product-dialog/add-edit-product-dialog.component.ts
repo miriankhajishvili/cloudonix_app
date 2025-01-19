@@ -15,12 +15,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { NgToastService } from 'ng-angular-popup';
+import { Message, NgToastService } from 'ng-angular-popup';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { positiveIntegerValidator } from '../../regex/positiveIntegerValidator.regex';
 import { IProduct } from '../../interfaces/products.interface';
 import { ProductService } from '../../services/product.service';
+import { MessageType, ToastMessages } from '../../enums/massages';
 
 @Component({
   selector: 'app-add-edit-product-dialog',
@@ -115,8 +116,8 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
           .subscribe((res) => {
             this.productService.currentProductSignal.set(res);
             this.ngToastService.success({
-              detail: 'Success Message',
-              summary: 'Product edited successfully',
+              detail: MessageType.SUCCESS,
+              summary: ToastMessages.EDIT_PRODUCT_SUCCESS,
             });
             this.dialog.closeAll();
           });
@@ -130,8 +131,8 @@ export class AddEditProductDialogComponent implements OnInit, OnDestroy {
               res,
             ]);
             this.ngToastService.success({
-              detail: 'Success Message',
-              summary: 'Product added successfully',
+              detail: MessageType.SUCCESS,
+              summary: ToastMessages.ADD_PRODUCT_SUCCESS,
             });
             this.dialog.closeAll();
           });

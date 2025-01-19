@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 
 import { NgToastService } from 'ng-angular-popup';
 import { ProductService } from '../../services/product.service';
+import { MessageType, ToastMessages } from '../../enums/massages';
 
 @Component({
   selector: 'app-delete-confirm-dialog',
@@ -37,8 +38,8 @@ export class DeleteConfirmDialogComponent {
   onYesClick() {
     this.productService.deleteProduct(this.data.id).subscribe((res) => {
       this.ngToastService.success({
-        detail: 'Success Message',
-        summary: 'Product deleted successfully',
+        detail: MessageType.SUCCESS,
+        summary: ToastMessages.DELETE_PRODUCT_SUCCESS,
       });
       this.router.navigate(['/products-list']);
     });
