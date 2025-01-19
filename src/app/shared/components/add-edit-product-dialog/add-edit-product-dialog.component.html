@@ -1,0 +1,196 @@
+<div class="container">
+  <div class="col-md-8">
+    <mat-card>
+      <form [formGroup]="productForm">
+        <!-- Product Name Field with Icon -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-icon matPrefix>drive_file_rename_outline</mat-icon>
+          <mat-label>Product Name</mat-label>
+          <input
+            matInput
+            formControlName="name"
+            placeholder="Enter product name"
+          />
+          <mat-error *ngIf="productForm.get('name')?.hasError('required')">
+            Product name is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- SKU and Cost Fields with Icons -->
+        <div class="sku-cost-container">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-icon matPrefix>tag</mat-icon>
+            <mat-label>SKU</mat-label>
+            <input
+              matInput
+              formControlName="sku"
+              placeholder="Enter SKU"
+              [readonly]="isSKUReadOnly"
+            />
+            <mat-error *ngIf="productForm.get('sku')?.hasError('required')"
+              >SKU is required</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-icon matPrefix>attach_money</mat-icon>
+            <mat-label>Cost</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="cost"
+              placeholder="Enter cost"
+              step="0.01"
+            />
+            <mat-error *ngIf="productForm.get('cost')?.hasError('required')"
+              >Cost is required</mat-error
+            >
+            <mat-error *ngIf="productForm.get('cost')?.hasError('min')"
+              >Cost must be a positive number</mat-error
+            >
+          </mat-form-field>
+        </div>
+
+        <!-- Description Field with Icon -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-icon matPrefix>description</mat-icon>
+          <mat-label>Description</mat-label>
+          <input
+            matInput
+            formControlName="description"
+            placeholder="Enter product description"
+            rows="3"
+          />
+          <mat-error
+            *ngIf="productForm.get('description')?.hasError('required')"
+          >
+            Description is required
+          </mat-error>
+        </mat-form-field>
+
+        <div formGroupName="profile">
+          <!-- Type Dropdown with Icon -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-icon matPrefix>category</mat-icon>
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type">
+              <mat-option value="furniture">Furniture</mat-option>
+              <mat-option value="equipment">Equipment</mat-option>
+              <mat-option value="stationary">Stationary</mat-option>
+              <mat-option value="part">Part</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Available Checkbox with Icon -->
+          <mat-checkbox formControlName="available"> Available </mat-checkbox>
+
+          <!-- Backlog Field with Icon -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-icon matPrefix>assignment</mat-icon>
+            <mat-label>Backlog</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="backlog"
+              placeholder="Enter backlog"
+            />
+            <mat-error
+              *ngIf="productForm.get('profile.backlog')?.hasError('required')"
+            >
+              Backlog is required.
+            </mat-error>
+            <mat-error
+              *ngIf="
+                productForm.get('profile.backlog')?.hasError('positiveInteger')
+              "
+            >
+              Backlog must be a positive integer.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Custom Properties Fields -->
+          <div formArrayName="customProperties">
+            <div
+              *ngFor="let property of customProperties.controls; let i = index"
+              [formGroupName]="i"
+              class="custom-property"
+            >
+              <!-- Key Field with Icon -->
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-icon matPrefix>key</mat-icon>
+                <mat-label>Key</mat-label>
+                <input
+                  matInput
+                  formControlName="key"
+                  placeholder="Enter key"
+                  [readonly]="data.onEdit"
+                />
+                <mat-error *ngIf="property.get('key')?.hasError('required')"
+                  >Key is required</mat-error
+                >
+              </mat-form-field>
+
+              <!-- Value Field with Icon -->
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-icon matPrefix>value</mat-icon>
+                <mat-label>Value</mat-label>
+                <input
+                  matInput
+                  formControlName="value"
+                  placeholder="Enter value"
+                />
+                <mat-error *ngIf="property.get('value')?.hasError('required')"
+                  >Value is required</mat-error
+                >
+              </mat-form-field>
+
+              <!-- Remove Custom Property Button -->
+              <button
+                type="button"
+                mat-icon-button
+                color="warn"
+                (click)="removeCustomProperty(i)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <!-- Add Custom Property Button -->
+          <div *ngIf="!data.onEdit" class="button-container">
+            <button
+              mat-flat-button
+              color="primary"
+              (click)="addCustomProperty()"
+              type="button"
+              [disabled]="data.onEdit"
+            >
+              Add Custom Property
+            </button>
+          </div>
+        </div>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="button-container">
+          <button
+            [disabled]="!hasFormChanged()"
+            (click)="onSubmit()"
+            mat-flat-button
+            color="primary"
+            type="button"
+          >
+            {{ data.onEdit ? "Edit Product" : "Create Product" }}
+          </button>
+          <button
+            (click)="dialog.closeAll()"
+            mat-flat-button
+            type="button"
+            class="cancel-btn"
+          >
+            {{ data.onEdit ? "Cancel Edit" : "Cancel Create" }}
+          </button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</div>

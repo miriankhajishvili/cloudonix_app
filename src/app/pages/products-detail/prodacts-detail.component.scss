@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  margin-top: 100px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.label {
+  font-weight: bold;
+  color: #555;
+  flex: 1;
+}
+
+.value {
+  color: #777;
+  flex: 2;
+}
+
+.profile-section {
+  margin-top: 20px;
+}
+
+h4 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.button-group button {
+  margin-left: 10px;
+}

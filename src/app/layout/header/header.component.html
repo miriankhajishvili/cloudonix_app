@@ -1,0 +1,21 @@
+<mat-toolbar color="primary" class="header-toolbar">
+  <button class="mat-button" mat-button [routerLink]="['/products-list']" aria-label="Go to Home">
+    <mat-icon>home</mat-icon>
+    Home
+  </button>
+  <span class="spacer"></span>
+
+  <button (click)="onClick()" class="mat-button" mat-button>
+    <mat-icon>add</mat-icon> Add Product
+  </button>
+  <button
+    class="mat-button"
+    (click)="openDialog()"
+    mat-icon-button
+    aria-label="Logout"
+  >
+    <span class="material-icons">logout</span>
+  </button>
+</mat-toolbar>
+
+<router-outlet></router-outlet>

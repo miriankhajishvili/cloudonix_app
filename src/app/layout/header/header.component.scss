@@ -1,0 +1,15 @@
+.header-toolbar {
+  width: 100wh;
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+  background-color: #1c1d1e;
+
+  .spacer {
+    flex-grow: 1;
+  }
+
+  .mat-button {
+    color: white !important;
+  }
+}
