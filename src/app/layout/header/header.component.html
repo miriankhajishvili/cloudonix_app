@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="header-toolbar">
+<mat-toolbar *ngIf="productService.key()" color="primary" class="header-toolbar">
   <button class="mat-button" mat-button [routerLink]="['/products-list']" aria-label="Go to Home">
     <mat-icon>home</mat-icon>
     Home

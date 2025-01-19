@@ -1,0 +1,35 @@
+.svg-container {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title-container {
+  padding-top: 20px;
+  width: 100%;
+  text-align: center;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.go-back-btn {
+  font-size: 18px;
+  padding: 10px 20px;
+  background-color: #F25A21; /* Primary blue color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.go-back-btn:hover {
+  background-color:  #f74c0e; /* Darker blue on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.go-back-btn:active {
+  transform: scale(0.98); /* Slightly shrink when clicked */
+}

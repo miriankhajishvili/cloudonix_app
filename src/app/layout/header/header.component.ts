@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { LogOutDialogComponent } from '../../shared/components/log-out-dialog/log-out-dialog.component';
 import { AddEditProductDialogComponent } from '../../shared/components/add-edit-product-dialog/add-edit-product-dialog.component';
+import { ProductService } from '../../shared/services/product.service';
 
 @Component({
   selector: 'app-header',
@@ -23,6 +24,7 @@ import { AddEditProductDialogComponent } from '../../shared/components/add-edit-
 })
 export class HeaderComponent {
   public dialog = inject(MatDialog);
+  public productService = inject(ProductService);
 
   openDialog(): void {
     this.dialog.open(LogOutDialogComponent, {

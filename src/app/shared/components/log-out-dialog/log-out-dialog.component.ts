@@ -40,7 +40,8 @@ export class LogOutDialogComponent {
       detail: MessageType.SUCCESS,
       summary: ToastMessages.LOGIN_SUCCESS,
     });
-    this.productService.key.set(null);
     this.router.navigate(['/auth/login']);
+    localStorage.removeItem('key');
+    this.productService.key.set(null);
   }
 }

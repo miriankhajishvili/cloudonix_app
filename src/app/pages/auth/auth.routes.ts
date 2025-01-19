@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { loginGuard } from '../../core/guards/login.guard';
 
 export const routes: Routes = [
   {
@@ -13,8 +14,8 @@ export const routes: Routes = [
         path: 'login',
         loadComponent: () =>
           import('./log-in/log-in.component').then((m) => m.LogInComponent),
+        canActivate: [loginGuard],
       },
-
     ],
   },
 ];

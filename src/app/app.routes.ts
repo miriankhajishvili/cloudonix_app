@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { HeaderComponent } from './layout/header/header.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,7 @@ export const routes: Routes = [
           import('./pages/products-list/products-list.component').then(
             (m) => m.ProductsListComponent
           ),
+        canActivate: [authGuard],
       },
       {
         path: 'products-detail/:id',
@@ -30,6 +32,15 @@ export const routes: Routes = [
           import('./pages/products-detail/prodacts-detail.component').then(
             (m) => m.ProdactsDetailComponent
           ),
+        canActivate: [authGuard],
+      },
+      {
+        path: '**',
+        pathMatch: 'full',
+        loadComponent: () =>
+          import(
+            './shared/components/page-not-found/pagenotfound.component'
+          ).then((m) => m.PagenotfoundComponent),
       },
     ],
   },

@@ -7,7 +7,7 @@ import { IProduct } from '../interfaces/products.interface';
   providedIn: 'root',
 })
 export class ProductService extends BaseService {
-  public key = signal<string | null>(null);
+  public key = signal<string | null>(localStorage.getItem('key'));  
   public currentProductSignal = signal<IProduct | null>(null);
   public productsSignal = signal<IProduct[]>([]);
 

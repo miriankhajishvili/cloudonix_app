@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -32,7 +32,7 @@ import { ProductService } from '../../../shared/services/product.service';
   templateUrl: './log-in.component.html',
   styleUrl: './log-in.component.scss',
 })
-export class LogInComponent {
+export class LogInComponent implements OnInit {
   private router = inject(Router);
   public productService = inject(ProductService);
 
@@ -50,9 +50,15 @@ export class LogInComponent {
     ]),
   });
 
+  ngOnInit(): void {
+   console.log(this.productService.key());
+  }
+  
+
   submit() {
     if (this.form.valid) {
-      this.productService.key.set(this.form.value.key);
+      localStorage.setItem('key', this.form.value.key);
+      this.productService.key.set(localStorage.getItem('key'));
       this.router.navigate(['/products-list']);
     }
   }
