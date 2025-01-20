@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ProductService } from '../../shared/services/product.service';
 import { ProductTableColumns } from '../../shared/enums/columns';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-products-list',
@@ -17,12 +18,14 @@ import { ProductTableColumns } from '../../shared/enums/columns';
     MatButtonModule,
     MatIconModule,
     RouterModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.scss',
 })
 export class ProductsListComponent implements OnInit {
   public productService = inject(ProductService);
+  loading = true
 
   displayedColumns: string[] = [
     ProductTableColumns.INDEX,
@@ -37,8 +40,14 @@ export class ProductsListComponent implements OnInit {
   }
 
   getAllProducts() {
-    this.productService.getAllProducts().subscribe((products) => {
-      this.productService.productsSignal.set(products);
-    });
+    this.productService.getAllProducts().subscribe({
+      next: (res) => {
+        this.productService.productsSignal.set(res);
+        this.loading = false
+      },
+      error: () => {
+        this.loading = false
+      }
+    })
   }
 }

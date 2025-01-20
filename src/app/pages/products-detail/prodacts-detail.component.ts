@@ -14,6 +14,7 @@ import { AddEditProductDialogComponent } from '../../shared/components/add-edit-
 import { ProductService } from '../../shared/services/product.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-prodacts-detail',
@@ -29,6 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatDividerModule,
     MatInputModule,
     MatIconModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './prodacts-detail.component.html',
   styleUrl: './prodacts-detail.component.scss',
@@ -37,15 +39,25 @@ export class ProdactsDetailComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   public productService = inject(ProductService);
   public dialog = inject(MatDialog);
+  loading : boolean = false
 
   ngOnInit(): void {
     this.setCurrentProductToSignal();
   }
 
   private setCurrentProductToSignal(): void {
+    this.loading = true; 
     this.productService
       .getCurrentProduct(this.activatedRoute.snapshot.params['id'])
-      .subscribe((res) => this.productService.currentProductSignal.set(res));
+      .subscribe({
+        next: (res) => {
+          this.productService.currentProductSignal.set(res);
+          this.loading = false; 
+        },
+        error: () => {
+          this.loading = false; 
+        },
+      });
   }
 
   onEditClick(currentProduct: IProduct): void {
